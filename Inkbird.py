@@ -27,7 +27,7 @@ inkbird_devices = {}
 import paho.mqtt.client as mqtt
 server="IP ADDRESS OF YOUR MQTT SERVER"
 port=1883  ###Change this port if your MQTT uses different port
-user="USER NAME OF MQTT"
+user="USERNAME OF MQTT"
 passwd="YOUR PASSWORD"
 client=mqtt.Client("INK")
 client.username_pw_set(user,passwd)
