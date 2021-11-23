@@ -32,6 +32,15 @@ passwd="YOUR PASSWORD"
 client=mqtt.Client("INK")
 client.username_pw_set(user,passwd)
 
+##### Convert Values ##########
+def convert_value(nums):
+    # check if temp is negative
+    num = (nums[1]<<8)|nums[0]
+    if nums[1] == 0xff:
+        num = -( (num ^ 0xffff ) + 1)
+    return float(num) / 100
+
+
 ###########################################################################
 ###On BLE advertisement callback
 def on_advertisement(advertisement):
@@ -40,8 +49,8 @@ def on_advertisement(advertisement):
         mac = advertisement.address.address
         if mac not in inkbird_devices:
             inkbird_devices[mac] = {}
-        itemp = int.from_bytes(advertisement.mfg_data[0:2], 'little')/100
-        ihum = int.from_bytes(advertisement.mfg_data[2:4], 'little')/100
+        itemp = convert_value (advertisement.mfg_data[0:2])
+        ihum = convert_value(advertisement.mfg_data[2:4])
         ibat = int.from_bytes(advertisement.mfg_data[7:8], 'little')
         inkbird_devices[mac]["address"] = mac
         inkbird_devices[mac]["temp"] = itemp
