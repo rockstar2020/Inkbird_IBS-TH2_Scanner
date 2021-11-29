@@ -34,12 +34,11 @@ client.username_pw_set(user,passwd)
 
 ##### Convert Values ##########
 def convert_value(nums):
+    num = nums[1] * 256 + nums[0]
     # check if temp is negative
-    num = (nums[1]<<8)|nums[0]
-    if nums[1] == 0xff:
-        num = -( (num ^ 0xffff ) + 1)
+    if num >= 0x8000:
+        num = num - 0x10000
     return float(num) / 100
-
 
 ###########################################################################
 ###On BLE advertisement callback
